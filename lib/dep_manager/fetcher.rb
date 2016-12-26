@@ -21,20 +21,26 @@ module DepManager
       private
 
       def fetch
-        req = Net::HTTP::Post.new(@uri, 'Content-Type' => 'application/json')
-        req.body = { packages: @packages, language: @language, os: @os }.to_json
-        res = Net::HTTP.start(@uri.hostname, @uri.port) do |http|
-          http.request(req)
-        end
-        parse_response(res)
-        return handle_server_response if res.is_a? Net::HTTPSuccess
+        start_request
+        parse_response
+        return handle_server_response if @res.is_a? Net::HTTPSuccess
         handle_server_errors
       end
 
-      def parse_response(res)
-        @parsed_response = JSON.parse(res.body)
+      def start_request
+        req = Net::HTTP::Post.new(@uri, 'Content-Type' => 'application/json')
+        req.body = { packages: @packages, language: @language, os: @os }.to_json
+        @res = Net::HTTP.start(@uri.hostname, @uri.port) do |http|
+          http.request(req)
+        end
       rescue
         Logger.error StandardError, 'Server Not Reachable'
+      end
+
+      def parse_response
+        @parsed_response = JSON.parse(@res.body)
+      rescue
+        Logger.error StandardError, 'Failed To Parse Server Response'
       end
 
       def handle_server_response

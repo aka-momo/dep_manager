@@ -1,7 +1,7 @@
 module DepManager
   # Module including Gem Configuration
   module Configuration
-    DEP_MANGER_URL = 'http://localhost:3000/api/v1/packages/fetch.json'.freeze
+    DEP_MANGER_URL = 'https://dep-manager.herokuapp.com/api/v1/packages/fetch.json'.freeze
 
     LANGUAGE_FILE = {
       ruby: 'GemFile',
