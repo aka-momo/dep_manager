@@ -15,14 +15,14 @@ module DepManager
 
       def load_file
         File.open(@file_name).read
-      rescue
-        raise LoadError, @file_name
+      rescue => e
+        Logger.error e, "Error Loading #{@file_name}"
       end
 
       def gems
         Gemnasium::Parser.gemfile(@content).dependencies.map(&:name)
-      rescue
-        raise SyntaxError, @file_name
+      rescue => e
+        Logger.error e, "Error parsing #{@file_name}"
       end
 
       def npms

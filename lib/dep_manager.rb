@@ -1,5 +1,6 @@
 require 'dep_manager/version'
-require 'dep_manager/manager'
+require 'dep_manager/logger'
+require 'dep_manager/runner'
 require 'rbconfig'
 
 # Main Module
@@ -11,7 +12,7 @@ module DepManager
     when /linux/
       :linux
     else
-      raise Error::WebDriverError, "Unknown OS: #{host_os.inspect}"
+      Logger.error Error::WebDriverError, "Unknown OS: #{host_os.inspect}"
     end
   end
 end

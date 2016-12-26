@@ -7,7 +7,7 @@ module DepManager
   # 1. Parse
   # 2. Fetch
   # 3. Install
-  class Manager
+  class Runner
     attr_reader :packages, :dependencies, :installed
 
     def initialize

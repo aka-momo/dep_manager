@@ -1,7 +1,7 @@
 module DepManager
   # Module including Gem Configuration
   module Configuration
-    DEP_MANGER_URL = 'http://localhost:3000/path_to_url.json'.freeze
+    DEP_MANGER_URL = 'http://localhost:3000/path/to/api'.freeze
 
     LANGUAGE_FILE = {
       ruby: 'GemFile',
@@ -15,7 +15,7 @@ module DepManager
 
     INSTALL_FOR_OS = {
       mac: 'brew install {package_name}',
-      linix: 'apt-get install {package_name}'
+      linux: 'apt-get install {package_name}'
     }.freeze
 
     def self.install_command(os, package_name)
