@@ -18,7 +18,8 @@ module DepManager
       linux: 'apt-get install {package_name}'
     }.freeze
 
-    def self.install_command(os, package_name)
+    def self.install_command(package_name)
+      os = DepManager.os
       INSTALL_FOR_OS[os].gsub('{package_name}', package_name)
     end
   end

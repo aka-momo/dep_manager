@@ -5,8 +5,13 @@ module DepManager
     class << self
       def run(dependencies)
         # TODO
+        puts 'Installing Dependencies:'
         puts dependencies
-        puts 'TODO: Installing Dependencies'
+        Logger.separate
+        dependencies.each do |d|
+          puts "installing #{d}"
+          system DepManager::Configuration.install_command(d)
+        end
       end
     end
   end

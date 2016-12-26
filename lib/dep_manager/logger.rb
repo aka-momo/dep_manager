@@ -17,6 +17,10 @@ module DepManager
       def log(message)
         puts message
       end
+
+      def separate(char='-')
+        puts char*100
+      end
     end
   end
 end

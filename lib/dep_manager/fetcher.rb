@@ -28,11 +28,11 @@ module DepManager
       end
 
       def start_request
+        https = Net::HTTP.new(@uri.host,@uri.port)
+        https.use_ssl = true
         req = Net::HTTP::Post.new(@uri, 'Content-Type' => 'application/json')
         req.body = { packages: @packages, language: @language, os: @os }.to_json
-        @res = Net::HTTP.start(@uri.hostname, @uri.port) do |http|
-          http.request(req)
-        end
+        @res = https.request(req)
       rescue
         Logger.error StandardError, 'Server Not Reachable'
       end
@@ -51,14 +51,15 @@ module DepManager
           end
         end
         handle_missing_packages
-        @server_dependencies
+        @server_dependencies.uniq
       end
 
       def handle_missing_packages
         missing_packages = @packages - @server_packages
         return if missing_packages.empty?
-        msg = missing_packages.join(',') + 'are not listed in the server'
+        msg = missing_packages.join(',') + ' are not listed on the server'
         Logger.warn(msg)
+        Logger.separate
       end
 
       def handle_server_errors
