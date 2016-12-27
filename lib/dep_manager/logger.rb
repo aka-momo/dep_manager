@@ -18,8 +18,8 @@ module DepManager
         puts message
       end
 
-      def separate(char='-')
-        puts char*100
+      def separate(char = '-')
+        puts char * 100
       end
     end
   end

@@ -4,7 +4,7 @@ module DepManager
     DEP_MANGER_URL = 'https://dep-manager.herokuapp.com/api/v1/packages/fetch.json'.freeze
 
     LANGUAGE_FILE = {
-      ruby: 'GemFile',
+      ruby: 'Gemfile',
       node: 'package.json'
     }.freeze
 
@@ -15,12 +15,22 @@ module DepManager
 
     INSTALL_FOR_OS = {
       mac: 'brew install {package_name}',
-      linux: 'apt-get install {package_name}'
+      linux: 'sudo apt-get install {package_name}'
     }.freeze
 
     def self.install_command(package_name)
-      os = DepManager.os
       INSTALL_FOR_OS[os].gsub('{package_name}', package_name)
+    end
+
+    def self.os
+      case RbConfig::CONFIG['host_os']
+      when /darwin|mac os/
+        :mac
+      when /linux/
+        :linux
+      else
+        Logger.error StandardError, "Unknown OS: #{RbConfig::CONFIG['host_os']}"
+      end
     end
   end
 end

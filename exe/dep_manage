@@ -2,4 +2,4 @@
 
 require 'dep_manager'
 
-DepManager::Runner.new
+DepManager::Runner.new ARGV[0]

@@ -10,10 +10,11 @@ module DepManager
   class Runner
     attr_reader :packages, :dependencies, :installed
 
-    def initialize
-      @packages     = DepManager::Parser.run
-      @dependencies = DepManager::Fetcher.run(@packages)
-      @installed    = DepManager::Installer.run(@dependencies)
+    def initialize(argv)
+      language      = (argv == 'node' ? :node : :ruby)
+      @packages     = DepManager::Parser.new(language).packages
+      @dependencies = DepManager::Fetcher.new(@packages).server_dependencies
+      DepManager::Installer.new(@dependencies)
     end
   end
 end

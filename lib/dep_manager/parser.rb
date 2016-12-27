@@ -3,31 +3,35 @@ module DepManager
   # Module responsible for:
   # - loading packages
   # - parsing packages
-  module Parser
-    class << self
-      def run(langauge = :ruby)
-        @file_name = Configuration::LANGUAGE_FILE[langauge]
-        @content   = load_file
-        send Configuration::LANGUAGE_PACKAGE[langauge]
-      end
+  class Parser
+    attr_reader :packages, :file_name, :content
 
-      private
+    def initialize(langauge = :ruby)
+      @file_name = Configuration::LANGUAGE_FILE[langauge]
+      load_file
+      send Configuration::LANGUAGE_PACKAGE[langauge]
+    end
 
-      def load_file
-        File.open(@file_name).read
-      rescue => e
-        Logger.error e, "Error Loading #{@file_name}"
-      end
+    private
 
-      def gems
-        Gemnasium::Parser.gemfile(@content).dependencies.map(&:name)
-      rescue => e
-        Logger.error e, "Error parsing #{@file_name}"
-      end
+    def load_file
+      @content = File.open(file_name).read
+    rescue
+      Logger.error LoadError, "Error Loading #{file_name}"
+    end
 
-      def npms
-        raise 'Npms Not supported yet'
-      end
+    def gems
+      @packages = Gemnasium::Parser.gemfile(content)
+                                   .dependencies.map(&:name)
+    rescue => e
+      Logger.error e, "Error parsing #{file_name}"
+    end
+
+    def npms
+      parsed_package_json = JSON.parse(content)
+      @packages = parsed_package_json['devDependencies'].keys
+    rescue
+      Logger.error StandardError, "Error parsing #{file_name}"
     end
   end
 end
