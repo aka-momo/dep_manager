@@ -10,7 +10,9 @@ Gem::Specification.new do |spec|
   spec.email         = ['mohamed.diaa27@gmail.com']
 
   spec.summary       = 'System Library Package Manager for Ruby Gems'
-  spec.description   = ''
+  spec.description   = 'DepManager gem provides the ability to determine
+                        and install system-level packages required to
+                        build native extensions.'
   spec.homepage      = 'https://github.com/mohameddiaa27/dep_manager'
   spec.license       = 'MIT'
 
@@ -19,12 +21,12 @@ Gem::Specification.new do |spec|
   # to allow pushing to a single host or
   # delete this section to allow pushing to any host.
 
-  if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com'"
-  else
-    raise 'RubyGems 2.0 or newer is required to protect against ' \
-      'public gem pushes.'
-  end
+  # if spec.respond_to?(:metadata)
+  #   spec.metadata['allowed_push_host'] = "'http://mygemserver.com'"
+  # else
+  #   raise 'RubyGems 2.0 or newer is required to protect against ' \
+  #     'public gem pushes.'
+  # end
 
   spec.files = `git ls-files bin exe lib LICENSE.txt README.md`.split($RS)
   spec.bindir        = 'exe'

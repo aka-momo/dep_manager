@@ -1,4 +1,5 @@
 # DepManager Gem
+[![Test Coverage](https://codeclimate.com/github/mohameddiaa27/dep_manager/badges/coverage.svg)](https://codeclimate.com/github/mohameddiaa27/dep_manager/coverage)
 
 DepManager gem provides the ability to determine system-level packages required to build native extensions. It collects all local gems (or npm packages) in your project and sends them to a web server to determine/install the system libraries you need.
 
