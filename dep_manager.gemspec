@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
   # delete this section to allow pushing to any host.
 
   if spec.respond_to?(:metadata)
-    # spec.metadata['allowed_push_host'] = 'https://rubygems.pkg.github.com/mohameddiaa27'
+    spec.metadata['allowed_push_host'] = 'https://rubygems.pkg.github.com/mohameddiaa27'
   else
     raise 'RubyGems 2.0 or newer is required to protect against ' \
       'public gem pushes.'
